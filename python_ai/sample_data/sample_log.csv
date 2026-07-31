@@ -1,0 +1,5 @@
+Machine,Temperature,Pressure,Vibration,Status
+Boiler-1,92,130,0.8,Warning
+Pump-2,75,90,0.2,Normal
+Compressor-1,110,160,1.5,Critical
+Value-3,68,85,0.1,Normal
