@@ -1,40 +1,36 @@
+from sentence_transformers import SentenceTransformer
 import faiss
 import numpy as np
-from sentence_transformers import SentenceTransformer
 
-# Load embedding model
+# Load model
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
-# Sample incident reports
-documents = [
-    "Boiler temperature exceeded safe limit.",
-    "Pump pressure dropped suddenly.",
-    "Gas leakage detected near storage tank.",
-    "Cooling system failure caused overheating."
-]
+# Read knowledge file
+with open("knowledge.txt", "r", encoding="utf-8") as f:
+    documents = f.readlines()
+
+documents = [doc.strip() for doc in documents if doc.strip()]
 
 # Create embeddings
 embeddings = model.encode(documents)
 
-# Convert to NumPy array
-embeddings = np.array(embeddings).astype("float32")
-
 # Create FAISS index
-dimension = embeddings.shape[1]
-index = faiss.IndexFlatL2(dimension)
-index.add(embeddings)
+index = faiss.IndexFlatL2(embeddings.shape[1])
+index.add(np.array(embeddings))
 
-def search_incident(query):
-    query_embedding = model.encode([query]).astype("float32")
-    distances, indices = index.search(query_embedding, 1)
+# User query
+query = "Why is the machine overheating?"
 
+# Convert query to embedding
+query_embedding = model.encode([query])
+
+# Search
+distance, indices = index.search(np.array(query_embedding), k=1)
+
+print("User Query:", query)
+print("Most Relevant Result:", documents[indices[0][0]])
+
+def search_rag(query):
+    query_embedding = model.encode([query])
+    distance, indices = index.search(np.array(query_embedding), k=1)
     return documents[indices[0][0]]
-
-# Test
-if __name__ == "__main__":
-    query = "Machine is getting too hot."
-
-    result = search_incident(query)
-
-    print("Most Similar Incident:")
-    print(result)

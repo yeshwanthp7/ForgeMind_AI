@@ -1,0 +1,7 @@
+Machine overheating is usually caused by cooling system failure, blocked airflow, or excessive load.
+
+High vibration may indicate bearing wear, shaft misalignment, or loose components.
+
+High pressure can occur because of blocked valves, pump malfunction, or excessive flow.
+
+Normal machine operating temperature is between 60°C and 90°C.

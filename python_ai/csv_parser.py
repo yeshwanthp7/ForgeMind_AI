@@ -1,6 +1,6 @@
 import pandas as pd
 
-def read_csv_file(csv_path):
+def read_csv(csv_path):
     """
     Read a CSV file and return a DataFrame.
     """
@@ -16,7 +16,7 @@ def read_csv_file(csv_path):
 if __name__ == "__main__":
     csv_file = "sample_data/sample_log.csv"
 
-    data = read_csv_file(csv_file)
+    data = read_csv(csv_file)
 
     if data is not None:
         print("CSV Loaded Successfully!")
